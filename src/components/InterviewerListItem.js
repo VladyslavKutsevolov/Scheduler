@@ -15,7 +15,7 @@ const InterviewerListItem = ({
   });
 
   return (
-    <li className={liStyle} onClick={() => setInterviewer(id)}>
+    <li className={liStyle} onClick={setInterviewer}>
       <img className='interviewers__item-image' src={avatar} alt={name} />
       {selected && name}
     </li>

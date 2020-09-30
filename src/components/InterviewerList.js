@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import InterviewerListItem from './InterviewerListItem';
 
-import 'components/InterviewerList.scss'
+import 'components/InterviewerList.scss';
 
 const InterviewerList = ({ interviewers, value, onChange }) => {
   return (
@@ -20,4 +20,4 @@ const InterviewerList = ({ interviewers, value, onChange }) => {
   );
 };
 
-export default InterviewerList
+export default InterviewerList;

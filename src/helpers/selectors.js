@@ -8,3 +8,16 @@ export const getAppointmentsForDay = (state, weekDay) => {
 
   return getAppoinments[0].appointments.map((id) => appointments[id]);
 };
+
+export const getInterview = (state, interview) => {
+  if (!interview) return null;
+
+  const { student, interviewer: id } = interview;
+
+  return {
+    student,
+    interviewer: state.interviewers
+      ? state.interviewers[id]
+      : (state.interviewers = {}),
+  };
+};

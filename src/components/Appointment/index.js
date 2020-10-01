@@ -4,18 +4,25 @@ import Show from './Show';
 import Empty from './Empty';
 
 import './styles.scss';
+import { useVisualMode } from 'components/hooks/useVisualMode';
+import Form from './Form';
+
+const EMPTY = 'EMPTY';
+const SHOW = 'SHOW';
+const CREATE = 'CREATE';
 
 const Appointment = ({ id, time, interview }) => {
+  const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
+  console.log(mode);
   return (
     <article className='appointment'>
       <Header time={time} />
-      {interview ? (
-        <Show
-          student={interview.student}
-          interviewer={interview.interviewer.name}
-        />
-      ) : (
-        <Empty />
+      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === SHOW && (
+        <Show student={interview.student} interviewer={interview.interviewer} />
+      )}
+      {mode === CREATE && (
+        <Form interviewers={[]} onCancel={() => transition(EMPTY)} />
       )}
     </article>
   );

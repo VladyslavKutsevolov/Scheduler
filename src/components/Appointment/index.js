@@ -59,13 +59,12 @@ const Appointment = ({
       student: name,
       interviewer,
     };
-    console.log(name, interviewer);
-    console.log('interview', interview);
+
     editInterview(id, interview).then((res) => {
       transition(SHOW);
     });
   };
-  console.log(mode);
+
   return (
     <article className='appointment'>
       <Header time={time} />

@@ -12,7 +12,6 @@ export const getAppointmentsForDay = (state, weekDay) => {
 export const getInterviewersForDay = (state, weekDay) => {
   if (!state.days.length) return [];
   const { days, interviewers } = state;
-  console.log('state', state);
 
   const getAppoinments = days.filter((day) => day.name === weekDay);
 

@@ -11,6 +11,7 @@ const InterviewerList = ({ interviewers, value, onChange }) => {
         {interviewers.map((teacher) => (
           <InterviewerListItem
             {...teacher}
+            key={teacher.id}
             setInterviewer={() => onChange(teacher.id)}
             selected={teacher.id === value}
           />

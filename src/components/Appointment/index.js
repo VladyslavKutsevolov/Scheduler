@@ -11,9 +11,19 @@ const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
 
-const Appointment = ({ id, time, interview, interviewers }) => {
+const Appointment = ({ id, time, interview, interviewers, bookInterview }) => {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
+  const save = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    bookInterview(id, interview).then((res) => {
+      transition(SHOW);
+    });
+  };
+  console.log('appointment int', interview);
   return (
     <article className='appointment'>
       <Header time={time} />
@@ -22,7 +32,11 @@ const Appointment = ({ id, time, interview, interviewers }) => {
         <Show student={interview.student} interviewer={interview.interviewer} />
       )}
       {mode === CREATE && (
-        <Form interviewers={interviewers} onCancel={() => transition(EMPTY)} />
+        <Form
+          interviewers={interviewers}
+          onCancel={() => transition(EMPTY)}
+          onSave={save}
+        />
       )}
     </article>
   );

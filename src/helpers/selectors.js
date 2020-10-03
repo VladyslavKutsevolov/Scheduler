@@ -31,8 +31,6 @@ export const getInterview = (state, interview) => {
 
   return {
     student,
-    interviewer: state.interviewers
-      ? state.interviewers[id]
-      : (state.interviewers = {}),
+    interviewer: state.interviewers[id],
   };
 };

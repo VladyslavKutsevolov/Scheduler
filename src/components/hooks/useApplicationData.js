@@ -49,6 +49,7 @@ const useApplicationData = () => {
       setState({ ...state, appointments, days });
     });
   };
+
   const cancelInterview = (id) => {
     const dayId = getDayId(state, state.day);
 

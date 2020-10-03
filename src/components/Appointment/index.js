@@ -90,6 +90,7 @@ const Appointment = ({
           onDelete={() => transition(CONFIRM)}
           onEdit={onEdit}
           interviewer={interview.interviewer}
+          interviewerId={interview.interviewer.id}
         />
       )}
       {mode === CREATE && (

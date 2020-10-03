@@ -11,7 +11,7 @@ const Form = ({
 }) => {
   const [name, setName] = useState(studentName || '');
   const [interviewer, setInterviewer] = useState(interviewerId || null);
-
+  console.log('id', interviewerId);
   const reset = () => {
     setName('');
     setInterviewer(null);

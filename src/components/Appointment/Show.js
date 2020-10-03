@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Show = ({ student, interviewer, onEdit, onDelete, interviewerId }) => {
-  console.log(interviewer);
+const Show = ({ student, interviewer, onEdit, onDelete }) => {
   return (
     <main className='appointment__card appointment__card--show'>
       <section className='appointment__card-left'>
@@ -17,7 +16,7 @@ const Show = ({ student, interviewer, onEdit, onDelete, interviewerId }) => {
             className='appointment__actions-button'
             src='images/edit.png'
             alt='Edit'
-            onClick={() => onEdit(student, interviewerId)}
+            onClick={onEdit}
           />
           <img
             className='appointment__actions-button'

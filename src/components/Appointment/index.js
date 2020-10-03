@@ -53,16 +53,8 @@ const Appointment = ({
       .catch((error) => transition(ERROR_DELETE, true));
   };
 
-  const onEdit = (name, interviewer) => {
+  const onEdit = () => {
     transition(EDITING);
-    const interview = {
-      student: name,
-      interviewer,
-    };
-
-    editInterview(id, interview).then((res) => {
-      transition(SHOW);
-    });
   };
 
   return (
@@ -90,7 +82,7 @@ const Appointment = ({
           onDelete={() => transition(CONFIRM)}
           onEdit={onEdit}
           interviewer={interview.interviewer}
-          interviewerId={interview.interviewer.id}
+          interviewerId={interview.interviewer.id || ''}
         />
       )}
       {mode === CREATE && (

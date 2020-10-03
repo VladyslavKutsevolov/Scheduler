@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { getDayId } from '../../helpers/selectors';
 import {
   SET_DAY,
   SET_APPLICATION_DATA,
@@ -37,22 +36,23 @@ const useApplicationData = () => {
   const setDay = (day) => dispatch({ type: SET_DAY, payload: day });
 
   const bookInterview = (id, interview) => {
-    dispatch({ type: UPDATE_SPOTS, payload: true });
-    return axios.put(`/api/appointments/${id}`, { interview }).then((res) =>
-      dispatch({
-        type: SET_INTERVIEW,
-        payload: {
-          id,
-          interview,
-        },
-      })
+    return axios.put(`/api/appointments/${id}`, { interview }).then(
+      (res) =>
+        dispatch({
+          type: SET_INTERVIEW,
+          payload: {
+            id,
+            interview,
+          },
+        }),
+      dispatch({ type: UPDATE_SPOTS, payload: true })
     );
   };
 
   const cancelInterview = (id) => {
-    dispatch({ type: UPDATE_SPOTS, payload: false });
-
-    return axios.delete(`/api/appointments/${id}`);
+    return axios
+      .delete(`/api/appointments/${id}`)
+      .then((res) => dispatch({ type: UPDATE_SPOTS, payload: false }));
   };
 
   return {
@@ -60,7 +60,6 @@ const useApplicationData = () => {
     setDay,
     bookInterview,
     cancelInterview,
-    // editInterview,
   };
 };
 

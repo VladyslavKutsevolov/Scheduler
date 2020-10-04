@@ -44,8 +44,10 @@ const Appointment = ({
       .catch((error) => transition(ERROR_SAVE, true));
   };
 
+  console.log('mode', mode);
+
   const onDelete = () => {
-    transition(DELETING);
+    transition(DELETING, true);
     cancelInterview(id)
       .then((res) => {
         transition(EMPTY);

@@ -18,7 +18,6 @@ const useApplicationData = () => {
 
   useEffect(() => {
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-
     ws.onopen = () => {
       ws.onmessage = (e) => {
         const { type, id, interview } = JSON.parse(e.data);

@@ -14,10 +14,10 @@ export const getInterviewersForDay = (state, weekDay) => {
   const { days, interviewers } = state;
 
   const getAppoinments = days.filter((day) => day.name === weekDay);
-
+  console.log(getAppoinments[0]);
   if (!getAppoinments.length) return [];
 
-  return getAppoinments[0].appointments.map((id) => interviewers[id]);
+  return getAppoinments[0].interviewers.map((id) => interviewers[id]);
 };
 
 export const getDayId = (state, weekDay) => {

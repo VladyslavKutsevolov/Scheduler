@@ -8,12 +8,12 @@ import {
 
 const appReducer = (state, { type, payload }) => {
   if (type === SET_DAY) {
-    console.log(type, payload);
     return { ...state, day: payload };
   }
 
   if (type === SET_APPLICATION_DATA) {
     const { days, appointments, interviewers } = payload;
+
     return { ...state, days, appointments, interviewers };
   }
 
@@ -26,6 +26,7 @@ const appReducer = (state, { type, payload }) => {
           ? { ...day, spots: --day.spots }
           : { ...day, spots: ++day.spots };
       }
+
       return { ...day };
     });
 
@@ -34,15 +35,17 @@ const appReducer = (state, { type, payload }) => {
 
   if (type === SET_INTERVIEW) {
     const { id, interview } = payload;
+
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview },
+      interview: interview ? { ...interview } : null,
     };
+
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-
+    console.log('appointment', appointment);
     return { ...state, appointments };
   }
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
@@ -27,16 +27,26 @@ const Appointment = ({
   interviewers,
   bookInterview,
   cancelInterview,
-  editInterview,
 }) => {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
+
+  useEffect(() => {
+    if (mode === EMPTY && interview) {
+      transition(SHOW);
+    }
+    if (mode === SHOW && interview === null) {
+      transition(EMPTY);
+    }
+  }, [interview, mode, transition]);
 
   const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer,
     };
+
     transition(SAVING);
+
     bookInterview(id, interview)
       .then((res) => {
         transition(SHOW);
@@ -44,10 +54,9 @@ const Appointment = ({
       .catch((error) => transition(ERROR_SAVE, true));
   };
 
-  console.log('mode', mode);
-
   const onDelete = () => {
     transition(DELETING, true);
+
     cancelInterview(id)
       .then((res) => {
         transition(EMPTY);
@@ -78,13 +87,12 @@ const Appointment = ({
           onConfirm={onDelete}
         />
       )}
-      {mode === SHOW && (
+      {mode === SHOW && interview && (
         <Show
           student={interview.student}
           onDelete={() => transition(CONFIRM)}
           onEdit={onEdit}
           interviewer={interview.interviewer}
-          interviewerId={interview.interviewer.id || ''}
         />
       )}
       {mode === CREATE && (

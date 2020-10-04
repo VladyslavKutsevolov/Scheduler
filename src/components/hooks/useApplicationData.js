@@ -17,6 +17,27 @@ const useApplicationData = () => {
   });
 
   useEffect(() => {
+    const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    ws.onopen = () => {
+      ws.onmessage = (e) => {
+        const { type, id, interview } = JSON.parse(e.data);
+
+        if (!interview) {
+          dispatch({ type, payload: id });
+        }
+
+        dispatch({
+          type,
+          payload: {
+            id,
+            interview,
+          },
+        });
+        dispatch({ type: UPDATE_SPOTS, payload: interview ? true : false });
+      };
+    };
+
     const getDays = axios.get('/api/days');
     const getAppointments = axios.get('/api/appointments');
     const getInterviewers = axios.get('/api/interviewers');
@@ -36,23 +57,19 @@ const useApplicationData = () => {
   const setDay = (day) => dispatch({ type: SET_DAY, payload: day });
 
   const bookInterview = (id, interview) => {
-    return axios.put(`/api/appointments/${id}`, { interview }).then(
-      (res) =>
-        dispatch({
-          type: SET_INTERVIEW,
-          payload: {
-            id,
-            interview,
-          },
-        }),
-      dispatch({ type: UPDATE_SPOTS, payload: true })
+    return axios.put(`/api/appointments/${id}`, { interview }).then((res) =>
+      dispatch({
+        type: SET_INTERVIEW,
+        payload: {
+          id,
+          interview,
+        },
+      })
     );
   };
 
   const cancelInterview = (id) => {
-    return axios
-      .delete(`/api/appointments/${id}`)
-      .then((res) => dispatch({ type: UPDATE_SPOTS, payload: false }));
+    return axios.delete(`/api/appointments/${id}`).then((res) => {});
   };
 
   return {

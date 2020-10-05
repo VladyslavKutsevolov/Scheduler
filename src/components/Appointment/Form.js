@@ -11,6 +11,20 @@ const Form = ({
 }) => {
   const [name, setName] = useState(studentName || '');
   const [interviewer, setInterviewer] = useState(interviewerId || null);
+  const [error, setError] = useState(false);
+
+  function validate(name, interviewer) {
+    if (name === '') {
+      setError('Student name cannot be blank');
+      return;
+    }
+
+    onSave(name, interviewer);
+  }
+
+  const save = (name, interviewer) => {
+    validate(name, interviewer);
+  };
 
   const reset = () => {
     setName('');
@@ -33,8 +47,12 @@ const Form = ({
             placeholder='Enter Student Name'
             onChange={({ target }) => setName(target.value)}
             value={name}
+            data-testid='student-name-input'
           />
         </form>
+        {error && (
+          <section className='appointment__validation'>{error}</section>
+        )}
         <InterviewerList
           interviewers={interviewers}
           value={interviewer}
@@ -46,7 +64,7 @@ const Form = ({
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={() => onSave(name, interviewer)}>
+          <Button confirm onClick={() => save(name, interviewer)}>
             Save
           </Button>
         </section>

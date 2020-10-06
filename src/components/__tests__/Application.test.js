@@ -11,6 +11,7 @@ import {
   getAllByTestId,
   getByAltText,
   getByPlaceholderText,
+  queryByText,
 } from '@testing-library/react';
 
 import Application from 'components/Application';
@@ -28,7 +29,7 @@ describe('Application component', () => {
   });
 
   it('loads data, books an interview and reduces the spots remaining for the first day by 1', async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
 
     await waitForElement(() => getAllByText(container, 'Archie Cohen'));
 
@@ -44,6 +45,13 @@ describe('Application component', () => {
 
     fireEvent.click(getByText(appointment, 'Save'));
 
-    console.log(prettyDOM(appointment));
+    expect(getByText(appointment, 'Saving')).toBeInTheDocument();
+
+    await waitForElement(() => queryByText(appointment, 'Lydia Miller-Jones'));
+
+    const day = getAllByTestId(container, 'day').find((day) =>
+      queryByText(day, 'Monday')
+    );
+    expect(getByText(day, 'no spots remaining')).toBeInTheDocument();
   });
 });

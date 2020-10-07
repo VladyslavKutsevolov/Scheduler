@@ -56,19 +56,23 @@ const useApplicationData = () => {
   const setDay = (day) => dispatch({ type: SET_DAY, payload: day });
 
   const bookInterview = (id, interview) => {
-    return axios.put(`/api/appointments/${id}`, { interview }).then((res) =>
+    return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
       dispatch({
         type: SET_INTERVIEW,
         payload: {
           id,
           interview,
         },
-      })
-    );
+      });
+    });
   };
 
   const cancelInterview = (id) => {
-    return axios.delete(`/api/appointments/${id}`).then((res) => {});
+    return axios.delete(`/api/appointments/${id}`).then(() => {
+      dispatch({ type: SET_INTERVIEW, payload: { interview: null, id } });
+      // only for test
+      dispatch({ type: UPDATE_SPOTS, payload: false });
+    });
   };
 
   return {

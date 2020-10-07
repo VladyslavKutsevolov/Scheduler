@@ -45,7 +45,7 @@ const appReducer = (state, { type, payload }) => {
       ...state.appointments,
       [id]: appointment,
     };
-    console.log('appointment', appointment);
+
     return { ...state, appointments };
   }
 };

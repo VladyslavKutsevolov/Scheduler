@@ -30,7 +30,7 @@ describe('Application component', () => {
   });
 
   it('loads data, books an interview and reduces the spots remaining for the first day by 1', async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     await waitForElement(() => getAllByText(container, 'Archie Cohen'));
 
@@ -120,8 +120,43 @@ describe('Application component', () => {
     expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
   });
 
-  /* test number five */
-  it('shows the save error when failing to save an appointment', () => {
+  it('shows the save error when failing to save an appointment', async () => {
     axios.put.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+
+    await waitForElement(() => getByText(container, 'Archie Cohen'));
+
+    const appointment = getAllByTestId(container, 'appointment')[0];
+
+    fireEvent.click(getByAltText(appointment, 'Add'));
+
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: 'Vlad' },
+    });
+
+    fireEvent.click(getByText(appointment, 'Save'));
+
+    expect(getByText(appointment, 'Saving')).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, 'Error'));
+  });
+
+  it('shows the delete error when failing to delete an existing appointment', async () => {
+    axios.delete.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+
+    await waitForElement(() => getByText(container, 'Archie Cohen'));
+
+    const appointment = getAllByTestId(container, 'appointment')[1];
+
+    fireEvent.click(getByAltText(appointment, 'Delete'));
+
+    fireEvent.click(getByText(appointment, 'Confirm'));
+
+    expect(getByText(appointment, 'Deleting')).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, 'Error'));
   });
 });

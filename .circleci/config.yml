@@ -35,17 +35,17 @@ jobs:
           command: |
             git push https://github.com/lighthouse-labs/scheduler.git master:production
 
-  workflows:
-    version: 2
-    test_and_deploy:
-      jobs:
-        - build:
-            filters:
-              branches:
-                ignore: production
-        - deploy:
-            filters:
-              branches:
-                ignore: production
-            requires:
-              - build
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build

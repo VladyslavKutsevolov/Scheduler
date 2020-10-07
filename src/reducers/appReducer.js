@@ -18,19 +18,7 @@ const appReducer = (state, { type, payload }) => {
   }
 
   if (type === UPDATE_SPOTS) {
-    const dayId = getDayId(state, state.day);
-
-    const days = state.days.map((day) => {
-      if (day.id === dayId) {
-        return payload
-          ? { ...day, spots: --day.spots }
-          : { ...day, spots: ++day.spots };
-      }
-
-      return { ...day };
-    });
-
-    return { ...state, days };
+    return { ...state, days: payload };
   }
 
   if (type === SET_INTERVIEW) {

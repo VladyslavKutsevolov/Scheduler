@@ -20,23 +20,28 @@ const useApplicationData = () => {
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
     ws.onopen = () => {
       ws.onmessage = (e) => {
-        const { type, id, interview } = JSON.parse(e.data);
-
-        if (!interview) {
-          dispatch({ type, payload: id });
-        }
+        const { id, interview } = JSON.parse(e.data);
 
         dispatch({
-          type,
+          type: SET_INTERVIEW,
           payload: {
             id,
             interview,
           },
         });
-        dispatch({ type: UPDATE_SPOTS, payload: interview ? true : false });
+
+        axios
+          .get('/api/days')
+          .then((days) => dispatch({ type: UPDATE_SPOTS, payload: days.data }));
       };
     };
 
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  useEffect(() => {
     const getDays = axios.get('/api/days');
     const getAppointments = axios.get('/api/appointments');
     const getInterviewers = axios.get('/api/interviewers');
@@ -70,8 +75,6 @@ const useApplicationData = () => {
   const cancelInterview = (id) => {
     return axios.delete(`/api/appointments/${id}`).then(() => {
       dispatch({ type: SET_INTERVIEW, payload: { interview: null, id } });
-      // only for test
-      dispatch({ type: UPDATE_SPOTS, payload: false });
     });
   };
 

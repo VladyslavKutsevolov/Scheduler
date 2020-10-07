@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   render,
   cleanup,
@@ -53,7 +52,7 @@ describe('Application component', () => {
     const day = getAllByTestId(container, 'day').find((day) =>
       queryByText(day, 'Monday')
     );
-    expect(getByText(day, 'no spots remaining')).toBeInTheDocument();
+    expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
   });
 
   it('loads data, cancels an interview and increases the spots remaining for Monday by 1', async () => {
@@ -84,11 +83,11 @@ describe('Application component', () => {
     const day = getAllByTestId(container, 'day').find((day) =>
       queryByText(day, 'Monday')
     );
-    expect(getByText(day, '2 spots remaining')).toBeInTheDocument();
+    expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
   });
 
   it('loads data, edits an interview and keeps the spots remaining for Monday the same', async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
 
     await waitForElement(() => getByText(container, 'Archie Cohen'));
 
@@ -102,21 +101,21 @@ describe('Application component', () => {
     expect(getByText(appointment, 'Save')).toBeInTheDocument();
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
-      target: { value: 'Bob' },
+      target: { value: 'Vlad' },
     });
 
-    // fireEvent.click(getByText(appointment, 'Save'));
+    fireEvent.click(queryByText(appointment, 'Save'));
 
-    // expect(getByText(appointment, 'Saving')).toBeInTheDocument();
+    expect(getByText(appointment, 'Saving')).toBeInTheDocument();
 
-    // await waitForElement(() => getByText(appointment, 'Vlad'));
+    await waitForElement(() => getByText(appointment, 'Vlad'));
 
-    // expect(getByText(appointment, 'Vlad')).toBeInTheDocument();
+    expect(getByText(appointment, 'Vlad')).toBeInTheDocument();
 
-    // const day = getAllByTestId(container, 'day').find((day) =>
-    //   queryByText(day, 'Monday')
-    // );
+    const day = getAllByTestId(container, 'day').find((day) =>
+      queryByText(day, 'Monday')
+    );
 
-    // expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
+    expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
   });
 });

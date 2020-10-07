@@ -61,7 +61,7 @@ const useApplicationData = () => {
   const setDay = (day) => dispatch({ type: SET_DAY, payload: day });
 
   const bookInterview = (id, interview) => {
-    return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
+    return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       dispatch({
         type: SET_INTERVIEW,
         payload: {

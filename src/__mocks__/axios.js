@@ -83,17 +83,10 @@ export default {
     }
   }),
   put: jest.fn((url) => {
-    if (url === '/api/appointments/1') {
-      fixtures.days[0].spots--;
-      return Promise.resolve({ status: 204, statusText: 'No Content' });
-    }
+    return Promise.resolve({ status: 204, statusText: 'No Content' });
   }),
 
   delete: jest.fn((url) => {
-    if (url === '/api/appointments/2') {
-      fixtures.days[0].spots++;
-      console.log('fire', fixtures.days);
-      return Promise.resolve({ status: 200, statusText: 'No Content' });
-    }
+    return Promise.resolve({ status: 200, statusText: 'No Content' });
   }),
 };

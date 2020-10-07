@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   render,
   cleanup,
@@ -117,5 +118,10 @@ describe('Application component', () => {
     );
 
     expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
+  });
+
+  /* test number five */
+  it('shows the save error when failing to save an appointment', () => {
+    axios.put.mockRejectedValueOnce();
   });
 });

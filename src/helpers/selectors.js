@@ -20,10 +20,6 @@ export const getInterviewersForDay = (state, weekDay) => {
   return getAppoinments[0].interviewers.map((id) => interviewers[id]);
 };
 
-export const getDayId = (state, weekDay) => {
-  return state.days.filter((day) => day.name === weekDay)[0].id;
-};
-
 export const getInterview = (state, interview) => {
   if (!interview) return null;
 

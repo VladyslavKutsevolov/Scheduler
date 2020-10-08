@@ -1,4 +1,3 @@
-import { getDayId } from 'helpers/selectors';
 import {
   SET_APPLICATION_DATA,
   SET_DAY,

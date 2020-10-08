@@ -134,8 +134,9 @@ describe('Application component', () => {
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: 'Vlad' },
     });
+    fireEvent.click(getByAltText(appointment, 'Sylvia Palmer'));
 
-    fireEvent.click(getByText(appointment, 'Save'));
+    fireEvent.click(queryByText(appointment, 'Save'));
 
     expect(getByText(appointment, 'Saving')).toBeInTheDocument();
 

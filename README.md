@@ -41,4 +41,8 @@ npm run cypress
 
 ## Screenshots
 
+!["Screenshot"](https://github.com/VladyslavKutsevolov/Scheduler/blob/master/docs/Screen%20Shot%202020-10-07%20at%207.25.37%20PM.png)
+
 !["Create interview"](https://github.com/VladyslavKutsevolov/Scheduler/blob/master/docs/Screen%20Shot%202020-10-07%20at%207.25.44%20PM.png)
+
+!["Screenshot"](https://github.com/VladyslavKutsevolov/Scheduler/blob/master/docs/Screen%20Shot%202020-10-07%20at%207.27.56%20PM.png)
